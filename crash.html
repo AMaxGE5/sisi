@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Plants vs Zombies - GBA</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Ajuste solo para este juego */
+    .game-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 20px auto;
+    }
+
+    .game-container #game {
+      width: 800px;   /* ancho fijo */
+      height: 600px;  /* alto fijo */
+      border: 4px solid #222;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+      background: #000; /* fondo negro mientras carga */
+    }
+  </style>
+</head>
+<body>
+  <!-- Nav derecho -->
+  <nav class="nav-right">
+    <a href="index.html" class="chip">Inicio</a>
+    <a href="menu.html" class="chip">Menú</a>
+    <a href="lista.html" class="chip">Lista de deseos</a>
+    <a href="faq.html" class="chip">FAQ</a>
+  </nav>
+
+  <!-- Contenido centrado -->
+  <div class="center-wrap">
+    <div class="center-card">
+      <h2 class="title-glow">Plants vs Zombies <span class="badge">GBA</span></h2>
+
+      <!-- Aquí el juego bien centrado -->
+      <div class="game-container">
+        <div id="game"></div>
+      </div>
+
+      <p class="note-muted">Si el emulador tarda en cargar, espera unos segundos y activa pantalla completa para mejor experiencia (F11).</p>
+    </div>
+  </div>
+
+  <!-- Botón engrane -->
+  <button id="gear" class="gear" aria-label="Notas">⚙️</button>
+
+  <!-- Notas desplegables -->
+  <section id="sheet" class="sheet" aria-hidden="true">
+    <div class="head">
+      <h3 class="m0">Notas de Plants vs Zombies</h3>
+      <button id="close-sheet" class="btn-ghost">Cerrar</button>
+    </div>
+    <div class="body">
+      <article class="card">
+        <h4 class="h4-tight">Info rápida</h4>
+        <p class="small">Este port de Plants vs Zombies para GBA conserva la esencia del original, adaptado a la portátil con controles simples.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Configuración EmulatorJS -->
+  <script>
+    EJS_player = "#game";
+    EJS_core = "gba";
+    EJS_gameName = "Plants vs Zombies";
+    EJS_color = "#228B22";
+    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+    EJS_gameUrl = "pvz.gba"; // ahora está en la misma carpeta
+    EJS_biosUrl = ""; // no necesita BIOS
+  </script>
+  <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+
+  <!-- Script solo para esta página -->
+  <script>
+    // Sheet (notas)
+    const gear = document.getElementById("gear");
+    const sheet = document.getElementById("sheet");
+    const closeSheet = document.getElementById("close-sheet");
+
+    gear.addEventListener("click", () => sheet.classList.add("open"));
+    closeSheet.addEventListener("click", () => sheet.classList.remove("open"));
+  </script>
+</body>
+</html>

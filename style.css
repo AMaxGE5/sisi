@@ -1,0 +1,286 @@
+/* =========================
+   Anti inyección Metropolis
+   ========================= */
+:root {
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --bg: #0f1115;
+  --surface: #171a21;
+  --surface-2: #1c2230;
+  --text: #eef2f7;
+  --muted: #a7b0c0;
+  --accent: #00e0a4;
+  --accent-2: #6aa8ff;
+  --chip-bg: #222836;
+}
+html { font-family: var(--font-sans); scroll-behavior: smooth; }
+* { font-family: inherit !important; }
+
+/* ====== Base ====== */
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+.m0 { margin: 0; }
+.mbs { margin-bottom: 10px; }
+.h2-tight, .h4-tight { margin: .2rem 0; }
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+.hero h1 {
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.badge {
+  display: inline-block;
+  margin-left: .5rem;
+  background: rgba(106,168,255,.15);
+  color: var(--accent-2);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: .8rem;
+  vertical-align: middle;
+  border: 1px solid rgba(106,168,255,.35);
+}
+.card {
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+.section { margin-top: 16px; }
+.small { color: var(--muted); line-height: 1.6; }
+.code, code {
+  background: #0b0e14;
+  color: #bfe7ff;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(191,231,255,.2);
+}
+
+/* ====== Chips (nav derecha) ====== */
+.nav-right {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 50;
+}
+.chip {
+  font-size: .9rem;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--chip-bg);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: transform .15s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.2);
+  box-shadow: 0 6px 16px rgba(0,0,0,.35);
+}
+
+/* ====== Botón engrane y Sheet ====== */
+.gear {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: var(--chip-bg);
+  color: var(--text);
+  box-shadow: 0 10px 26px rgba(0,0,0,.45);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  z-index: 60;
+}
+.gear:hover { transform: translateY(-2px); }
+
+.sheet {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 50vh;
+  transform: translateY(100%);
+  background: rgba(15,17,21,.92);
+  backdrop-filter: blur(6px);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  transition: transform .28s ease;
+  z-index: 55;
+}
+.sheet.open { transform: translateY(0); }
+.sheet .head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.sheet .body { padding: 12px 16px 18px; height: calc(50vh - 58px); overflow: auto; }
+.btn-ghost {
+  background: transparent; color: var(--text);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px;
+  padding: 6px 10px; cursor: pointer;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,.3); }
+
+/* ====== Panel centrado para páginas de juego ====== */
+.center-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 12px;
+}
+.center-card {
+  width: 960px; max-width: 96vw;
+  height: 540px; max-height: 80vh;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+  display: grid; place-items: center;
+  text-align: center; padding: 18px;
+}
+h2.title-glow {
+  color: var(--accent);
+  margin: 0 0 10px 0;
+  text-shadow: 0 0 10px rgba(0,224,164,.45);
+}
+.btn-primary {
+  background: #232a3a;
+  color: var(--accent);
+  border: 1px solid rgba(0,224,164,.5);
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  background: #273048;
+  box-shadow: 0 8px 18px rgba(0,224,164,.25);
+}
+.note-muted { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+
+/* ====== Grid de juegos ====== */
+.grid-games {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 12px;
+  padding: 12px;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.game-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+.game-card span {
+  color: var(--text);
+  font-size: .9rem;
+  text-align: center;
+}
+.game-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,.35);
+}
+
+/* ====== Menú lateral ====== */
+.side-menu {
+  position: fixed;
+  top: 80px;
+  right: 12px;
+  z-index: 45;
+}
+.menu-toggle {
+  background: var(--chip-bg);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: .9rem;
+}
+.menu-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px;
+  display: none;
+}
+.menu-list li a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: .9rem;
+}
+.menu-list li a:hover {
+  background: var(--surface-2);
+}
+.side-menu.open .menu-list {
+  display: block;
+}
+/* ====== Dropdown menú ====== */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: var(--surface-2);
+  min-width: 180px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.35);
+  border-radius: 8px;
+  z-index: 10;
+}
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  color: var(--text);
+  text-decoration: none;
+}
+.dropdown-content a:hover {
+  background: rgba(255,255,255,0.06);
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* ====== Destacar nuevos juegos ====== */
+.game-card {
+  position: relative;
+}
+.game-card .label {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: #e53935;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
